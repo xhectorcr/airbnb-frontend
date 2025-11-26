@@ -1,0 +1,127 @@
+$text-dark: #222222;
+$text-gray: #717171;
+$border-gray: #DDDDDD;
+$bg-gray: #F7F7F7;
+
+.footer {
+  background-color: white;
+  border-top: 1px solid $border-gray;
+  padding: 48px 0 24px;
+  margin-top: 48px;
+
+  &-container {
+    max-width: 2520px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    @media (min-width: 640px) {
+      padding: 0 24px;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 0 80px;
+    }
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &-column {
+    h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: $text-dark;
+    }
+  }
+
+  &-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 12px;
+
+      a {
+        color: $text-gray;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.2s;
+
+        &:hover {
+          color: $text-dark;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  &-bottom {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid $border-gray;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  &-bottom-left {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+    color: $text-gray;
+
+    a {
+      color: $text-gray;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &-bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.footer-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid $border-gray;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: $text-dark;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $bg-gray;
+  }
+}
+
+.icon-small {
+  width: 16px;
+  height: 16px;
+}
