@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { Header } from './shared/components/header/header';
 import { Footer } from './shared/components/footer/footer';
 
@@ -11,4 +11,11 @@ import { Footer } from './shared/components/footer/footer';
 })
 export class App {
   protected readonly title = signal('airbnb-frontend');
+
+  constructor(public router: Router) { }
+
+  get showFooter(): boolean {
+    const currentUrl = this.router.url;
+    return !currentUrl.includes('/login') && !currentUrl.includes('/register');
+  }
 }
