@@ -1,0 +1,169 @@
+$primary-color: #FF385C;
+$text-dark: #222222;
+$text-gray: #717171;
+$border-gray: #DDDDDD;
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px); // Adjust based on header height
+  padding: 40px 20px;
+  background-color: white;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 568px;
+  border: 1px solid $border-gray;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.register-header {
+  padding: 24px;
+  border-bottom: 1px solid $border-gray;
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-dark;
+  }
+}
+
+.register-form {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  position: relative;
+
+  input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid $border-gray;
+    border-radius: 8px;
+    font-size: 16px;
+    color: $text-dark;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: $text-dark;
+    }
+
+    &.error {
+      border-color: #c13515;
+    }
+  }
+}
+
+.error-message {
+  color: #c13515;
+  font-size: 12px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.form-error {
+  color: #c13515;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken($primary-color, 5%);
+  }
+
+  &:disabled {
+    background-color: lighten($primary-color, 20%);
+    cursor: not-allowed;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 24px;
+  color: $text-gray;
+  font-size: 12px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: $border-gray;
+  }
+
+  span {
+    padding: 0 16px;
+  }
+}
+
+.social-login {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.social-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid $text-dark;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f7f7f7;
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 20px;
+  }
+}
+
+.register-footer {
+  padding: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: $text-dark;
+  border-top: 1px solid $border-gray;
+
+  a {
+    color: $text-dark;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

@@ -1,15 +1,10 @@
 <div class="airbnb-home">
-  <app-header></app-header>
-
   <!-- Categories -->
   <div class="categories-border">
     <div class="categories-container">
       <div class="categories-scroll">
-        <button 
-          *ngFor="let category of categories"
-          class="category-button"
-          [class.active]="activeCategory === category.id"
-          (click)="setActiveCategory(category.id)">
+        <button *ngFor="let category of categories" class="category-button"
+          [class.active]="activeCategory === category.id" (click)="setActiveCategory(category.id)">
           <span class="category-icon">{{ category.icon }}</span>
           <span class="category-name">{{ category.name }}</span>
         </button>
@@ -28,7 +23,9 @@
 
           <button class="favorite-button">
             <svg class="heart-icon" viewBox="0 0 32 32">
-              <path d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z"></path>
+              <path
+                d="M16 28c7-4.73 14-10 14-17a6.98 6.98 0 0 0-7-7c-1.8 0-3.58.68-4.95 2.05L16 8.1l-2.05-2.05a6.98 6.98 0 0 0-9.9 0A6.98 6.98 0 0 0 2 11c0 7 7 12.27 14 17z">
+              </path>
             </svg>
           </button>
         </div>
@@ -40,7 +37,8 @@
 
             <div class="listing-rating">
               <svg class="star-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                </path>
               </svg>
               <span class="rating-value">{{ listing.rating }}</span>
             </div>
@@ -50,7 +48,7 @@
           <p class="listing-dates">{{ listing.dates }}</p>
 
           <p class="listing-price">
-            <span class="price-value">${{ listing.price }}</span>
+            <span class="price-value">S/{{ listing.price }}</span>
             <span class="price-period">noche</span>
           </p>
         </div>
@@ -58,6 +56,4 @@
       </div>
     </div>
   </main>
-
-  <app-footer></app-footer>
 </div>

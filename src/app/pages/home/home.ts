@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Header } from '../../shared/components/header/header';
-import { Footer } from '../../shared/components/footer/footer';
+
 
 interface Category {
   id: string;
@@ -26,7 +25,7 @@ interface Listing {
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
   standalone: true,
-  imports: [CommonModule, Header, Footer]
+  imports: [CommonModule]
 })
 export class Home {
   activeCategory: string = 'all';
