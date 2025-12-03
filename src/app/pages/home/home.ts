@@ -32,115 +32,99 @@ export class Home {
 
   categories: Category[] = [
     { id: 'all', name: 'Todo', icon: '🏠' },
-    { id: 'beach', name: 'Playa', icon: '🏖️' },
-    { id: 'mountain', name: 'Montaña', icon: '🏔️' },
-    { id: 'trending', name: 'Tendencia', icon: '🔥' },
-    { id: 'pools', name: 'Piscinas', icon: '🏊' },
-    { id: 'cabins', name: 'Cabañas', icon: '🛖' },
-    { id: 'city', name: 'Ciudad', icon: '🌆' },
-    { id: 'countryside', name: 'Campo', icon: '🌾' },
-    { id: 'luxe', name: 'Luxe', icon: '💎' }
+    { id: 'houses', name: 'Casas', icon: '🏡' },
+    { id: 'apartments', name: 'Departamento', icon: '🏢' },
+    { id: 'rooms', name: 'Cuarto', icon: '🛏️' }
   ];
 
   listings: Listing[] = [
     {
       id: 1,
-      image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600',
-      category: 'beach',
-      location: 'Máncora, Perú',
-      host: 'Anfitrión profesional',
-      dates: '15 - 20 dic',
-      price: 145,
-      rating: 4.9,
-      reviews: 127
+      image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600',
+      category: 'houses',
+      location: 'San Isidro, Lima',
+      host: 'Familia Rodriguez',
+      dates: 'Disponible todo el año',
+      price: 1200,
+      rating: 4.8,
+      reviews: 45
     },
     {
       id: 2,
-      image: 'https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=600',
-      category: 'mountain',
-      location: 'Cusco, Perú',
-      host: 'Superanfitrión',
-      dates: '10 - 15 dic',
-      price: 189,
-      rating: 4.95,
-      reviews: 234
+      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600',
+      category: 'apartments',
+      location: 'Miraflores, Lima',
+      host: 'Jorge Perez',
+      dates: 'Contrato mínimo 6 meses',
+      price: 1500,
+      rating: 4.9,
+      reviews: 82
     },
     {
       id: 3,
-      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600',
-      category: 'pools',
-      location: 'Arequipa, Perú',
-      host: 'Anfitrión experimentado',
-      dates: '5 - 10 ene',
-      price: 210,
-      rating: 4.87,
-      reviews: 89
+      image: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=600',
+      category: 'rooms',
+      location: 'Barranco, Lima',
+      host: 'Ana Maria',
+      dates: 'Disponible ahora',
+      price: 500,
+      rating: 4.7,
+      reviews: 23
     },
     {
       id: 4,
-      image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600',
-      category: 'beach',
-      location: 'Paracas, Perú',
-      host: 'Superanfitrión',
-      dates: '20 - 25 dic',
-      price: 165,
-      rating: 4.92,
-      reviews: 156
+      image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600',
+      category: 'houses',
+      location: 'La Molina, Lima',
+      host: 'Carlos Ruiz',
+      dates: 'Alquiler mensual',
+      price: 1800,
+      rating: 4.95,
+      reviews: 15
     },
     {
       id: 5,
-      image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600',
-      category: 'city',
-      location: 'Lima, Perú',
-      host: 'Anfitrión profesional',
-      dates: '1 - 6 ene',
-      price: 198,
-      rating: 4.88,
-      reviews: 203
+      image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600',
+      category: 'apartments',
+      location: 'Surco, Lima',
+      host: 'Maria Lopez',
+      dates: 'Estudiantes preferible',
+      price: 1100,
+      rating: 4.85,
+      reviews: 67
     },
     {
       id: 6,
-      image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600',
-      category: 'mountain',
-      location: 'Huaraz, Perú',
-      host: 'Superanfitrión',
-      dates: '12 - 17 dic',
-      price: 135,
-      rating: 4.96,
-      reviews: 178
+      image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=600',
+      category: 'rooms',
+      location: 'Lince, Lima',
+      host: 'Sra. Carmen',
+      dates: 'Servicios incluidos',
+      price: 450,
+      rating: 4.6,
+      reviews: 34
     },
     {
       id: 7,
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600',
-      category: 'cabins',
-      location: 'Oxapampa, Perú',
-      host: 'Superanfitrión',
-      dates: '2 - 6 ene',
-      price: 160,
-      rating: 4.91,
-      reviews: 142
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600',
+      category: 'houses',
+      location: 'San Borja, Lima',
+      host: 'Roberto Gomez',
+      dates: 'Cerca a universidades',
+      price: 1400,
+      rating: 4.88,
+      reviews: 56
     },
     {
       id: 8,
-      image: 'https://images.unsplash.com/photo-1558979158-65a1eaa08691?w=600',
-      category: 'luxe',
-      location: 'Miraflores, Lima',
-      host: 'Anfitrión profesional',
-      dates: '8 - 14 ene',
-      price: 320,
-      rating: 4.98,
-      reviews: 312
-    },
-    {
-      id: 9,
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600',
-      category: 'countryside',
-      location: 'Cajamarca, Perú',
-      host: 'Superanfitrión',
-      dates: '10 - 15 feb',
-      price: 110,
-      rating: 4.85,
-      reviews: 98
+      image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600',
+      category: 'apartments',
+      location: 'Magdalena, Lima',
+      host: 'Inmobiliaria Joven',
+      dates: 'Amoblado completo',
+      price: 1300,
+      rating: 4.92,
+      reviews: 89
     }
   ];
 

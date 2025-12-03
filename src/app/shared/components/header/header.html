@@ -11,25 +11,6 @@
         <span class="logo-text">airbnb</span>
       </div>
 
-      <!-- Search Bar -->
-      <div class="search-bar">
-        <div class="search-item border-right">
-          <div class="search-text">Cualquier lugar</div>
-        </div>
-        <div class="search-item border-right">
-          <div class="search-text">Cualquier semana</div>
-        </div>
-        <div class="search-item-with-button">
-          <div class="search-text-light">Agregar huéspedes</div>
-          <div class="search-button">
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-
       <!-- Right Menu -->
       <div class="right-menu">
 
@@ -60,7 +41,11 @@
           <div class="menu-item bold" routerLink="/login" (click)="toggleMenu()">Iniciar sesión</div>
           <div class="menu-item" routerLink="/register" (click)="toggleMenu()">Regístrate</div>
           <div class="divider"></div>
-          <div class="menu-item" (click)="toggleMenu()">Pon tu casa en Airbnb</div>
+          <div class="menu-item bold" routerLink="/" (click)="toggleMenu()">Explorar Alojamientos</div>
+          <div class="menu-item" (click)="toggleMenu()">Mis Reservas</div>
+          <div class="menu-item" (click)="toggleMenu()">Mis Publicaciones</div>
+          <div class="menu-item" (click)="toggleMenu()">Publicar Alojamiento</div>
+          <div class="divider"></div>
           <div class="menu-item" (click)="toggleMenu()">Ayuda</div>
         </div>
         }
