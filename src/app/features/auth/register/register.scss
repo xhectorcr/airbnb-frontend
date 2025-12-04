@@ -1,169 +1,594 @@
+// Variables modernas
 $primary-color: #FF385C;
-$text-dark: #222222;
-$text-gray: #717171;
-$border-gray: #DDDDDD;
+$primary-hover: #E31C5F;
+$secondary-color: #222222;
+$light-gray: #f7f7f7;
+$medium-gray: #dddddd;
+$dark-gray: #717171;
+$white: #ffffff;
+$success-green: #00A699;
+$error-red: #FF5A5F;
+$warning-yellow: #FFB400;
+$shadow-light: 0 2px 16px rgba(0, 0, 0, 0.08);
+$shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+$gradient-primary: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%);
+$gradient-secondary: linear-gradient(135deg, #222222 0%, #484848 100%);
 
+// Función para oscurecer colores (compatible con Sass moderno)
+@function darken-color($color, $amount) {
+  $hue: hue($color);
+  $saturation: saturation($color);
+  $lightness: lightness($color) - $amount;
+  @return hsl($hue, $saturation, $lightness);
+}
+
+@function lighten-color($color, $amount) {
+  $hue: hue($color);
+  $saturation: saturation($color);
+  $lightness: lightness($color) + $amount;
+  @return hsl($hue, $saturation, $lightness);
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+// Estilos principales
 .register-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px); // Adjust based on header height
+  min-height: 100vh;
   padding: 40px 20px;
-  background-color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+  }
 }
 
 .register-card {
   width: 100%;
-  max-width: 568px;
-  border: 1px solid $border-gray;
-  border-radius: 12px;
+  max-width: 480px;
+  background: $white;
+  border-radius: 24px;
   overflow: hidden;
+  box-shadow: $shadow-medium;
+  animation: fadeIn 0.6s ease-out;
+  position: relative;
+  z-index: 1;
+  transform: perspective(1000px) rotateX(0deg);
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    
+  }
 }
 
 .register-header {
-  padding: 24px;
-  border-bottom: 1px solid $border-gray;
+  padding: 32px 32px 24px;
   text-align: center;
-
+  background: $gradient-primary;
+  color: $white;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%
+    );
+    animation: shimmer 3s infinite linear;
+  }
+  
   h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: 28px;
     font-weight: 700;
-    color: $text-dark;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
+    position: relative;
+    z-index: 1;
   }
 }
 
 .register-form {
-  padding: 24px;
+  padding: 32px;
 }
 
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   position: relative;
-
-  input {
-    width: 100%;
-    padding: 16px;
-    border: 1px solid $border-gray;
-    border-radius: 8px;
-    font-size: 16px;
-    color: $text-dark;
-    outline: none;
-    transition: border-color 0.2s;
-
-    &:focus {
-      border-color: $text-dark;
+  
+  &:hover {
+    .floating-label {
+      color: $primary-color;
     }
+    
+    input {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+  }
+}
 
+.floating-label {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  color: $dark-gray;
+  font-size: 14px;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background: $white;
+  padding: 0 4px;
+  z-index: 2;
+  
+  &.active {
+    top: -8px;
+    font-size: 12px;
+    color: $primary-color;
+    font-weight: 600;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  
+  input {
+    width: 90%;
+    padding: 24px 16px 12px;
+    border: 2px solid $medium-gray;
+    border-radius: 12px;
+    font-size: 16px;
+    color: $secondary-color;
+    background: $white;
+    outline: none;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+      
+      + .floating-label {
+        top: -8px;
+        font-size: 12px;
+        color: $primary-color;
+        font-weight: 600;
+      }
+    }
+    
     &.error {
-      border-color: #c13515;
+      border-color: $error-red;
+      animation: shake 0.5s ease;
+      
+      + .floating-label {
+        color: $error-red;
+      }
+    }
+    
+    &.valid {
+      border-color: $success-green;
+      
+      + .floating-label {
+        color: $success-green;
+      }
+    }
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: $dark-gray;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: $primary-color;
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
     }
   }
 }
 
 .error-message {
-  color: #c13515;
+  color: $error-red;
   font-size: 12px;
-  margin-top: 4px;
+  margin-top: 8px;
   display: flex;
   align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  
+  &::before {
+    content: '⚠';
+    font-size: 14px;
+  }
 }
 
-.form-error {
-  color: #c13515;
-  font-size: 14px;
-  margin-bottom: 16px;
-  text-align: center;
+.password-strength {
+  margin-top: 8px;
+  font-size: 12px;
+  
+  .strength-bar {
+    height: 4px;
+    background: $medium-gray;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+    
+    .fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+      
+      &.weak { 
+        background: $error-red; 
+        width: 33%; 
+      }
+      &.medium { 
+        background: $warning-yellow; 
+        width: 66%; 
+      }
+      &.strong { 
+        background: $success-green; 
+        width: 100%; 
+      }
+    }
+  }
+  
+  .strength-text {
+    font-weight: 500;
+    
+    &.weak { color: $error-red; }
+    &.medium { color: $warning-yellow; }
+    &.strong { color: $success-green; }
+  }
+}
+
+.terms-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: $primary-color;
+  }
+  
+  label {
+    font-size: 13px;
+    color: $dark-gray;
+    line-height: 1.4;
+    cursor: pointer;
+    
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 600;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .submit-btn {
   width: 100%;
-  padding: 14px;
-  background-color: $primary-color;
-  color: white;
+  padding: 18px;
+  background: $gradient-primary;
+  color: $white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: darken($primary-color, 5%);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
   }
-
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba($primary-color, 0.3);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
   &:disabled {
-    background-color: lighten($primary-color, 20%);
+    background: $medium-gray;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    
+    &::before {
+      display: none;
+    }
+  }
+  
+  .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: $white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+    vertical-align: middle;
   }
 }
 
 .divider {
   display: flex;
   align-items: center;
-  margin: 16px 24px;
-  color: $text-gray;
-  font-size: 12px;
-
+  margin: 24px 0;
+  color: $dark-gray;
+  font-size: 13px;
+  font-weight: 500;
+  
   &::before,
   &::after {
     content: '';
     flex: 1;
     height: 1px;
-    background-color: $border-gray;
+    background: linear-gradient(to right, transparent, $medium-gray, transparent);
   }
-
+  
   span {
     padding: 0 16px;
+    background: $white;
   }
 }
 
 .social-login {
-  padding: 0 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .social-btn {
   width: 100%;
-  padding: 12px;
-  background-color: white;
-  border: 1px solid $text-dark;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 16px;
+  background: $white;
+  border: 2px solid $medium-gray;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 600;
-  color: $text-dark;
+  color: $secondary-color;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: background-color 0.2s;
-
+  transition: all 0.3s ease;
+  
   &:hover {
-    background-color: #f7f7f7;
+    border-color: $secondary-color;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
-
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
   .social-icon {
     width: 20px;
     height: 20px;
     position: absolute;
     left: 20px;
+    
+    &.google {
+      color: #4285F4;
+    }
+    
+    &.facebook {
+      color: #1877F2;
+    }
+  }
+}
+
+.success-message {
+  background: linear-gradient(135deg, rgba($success-green, 0.1) 0%, rgba($success-green, 0.05) 100%);
+  border: 2px solid $success-green;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeIn 0.5s ease;
+  
+  .success-icon {
+    width: 24px;
+    height: 24px;
+    color: $success-green;
+    flex-shrink: 0;
+  }
+  
+  p {
+    margin: 0;
+    color: darken-color($success-green, 15%);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}
+
+.error-message-global {
+  background: linear-gradient(135deg, rgba($error-red, 0.1) 0%, rgba($error-red, 0.05) 100%);
+  border: 2px solid $error-red;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeIn 0.5s ease;
+  
+  .error-icon {
+    width: 24px;
+    height: 24px;
+    color: $error-red;
+    flex-shrink: 0;
+  }
+  
+  p {
+    margin: 0;
+    color: darken-color($error-red, 15%);
+    font-weight: 500;
+    line-height: 1.4;
   }
 }
 
 .register-footer {
-  padding: 24px;
+  padding: 24px 32px;
   text-align: center;
   font-size: 14px;
-  color: $text-dark;
-  border-top: 1px solid $border-gray;
-
+  color: $dark-gray;
+  border-top: 1px solid $light-gray;
+  background: rgba($light-gray, 0.5);
+  
   a {
-    color: $text-dark;
-    font-weight: 600;
-    text-decoration: underline;
-    cursor: pointer;
+    color: $primary-color;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 4px;
+    transition: all 0.2s;
+    
+    &:hover {
+      text-decoration: underline;
+      color: $primary-hover;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .register-container {
+    padding: 20px;
+    background-attachment: scroll;
+  }
+  
+  .register-card {
+    border-radius: 16px;
+  }
+  
+  .register-header {
+    padding: 24px 24px 16px;
+    
+    h2 {
+      font-size: 24px;
+    }
+  }
+  
+  .register-form {
+    padding: 24px;
+  }
+  
+  .submit-btn {
+    padding: 16px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-header {
+    h2 {
+      font-size: 20px;
+    }
+  }
+  
+  .input-wrapper input {
+    padding: 22px 16px 10px;
+    font-size: 15px;
+  }
+  
+  .social-btn {
+    padding: 14px;
+    font-size: 14px;
   }
 }
