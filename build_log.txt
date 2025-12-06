@@ -1,0 +1,105 @@
+
+> airbnb-frontend@0.0.0 build
+> ng build
+
+[33mÔØ»[39m Building...
+[32mÔ£ö[39m Building...
+[35mPrerendered 0 static routes.[39m
+Application bundle generation failed. [5.278 seconds] - 2025-12-05T02:05:28.038Z
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:92:22:
+      92 Ôöé     background-color: darken($primary-color, 5%);
+         ÔòÁ                       ^
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: https://sass-lang.com/d/import
+
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:92:22:
+      92 Ôöé     background-color: darken($primary-color, 5%);
+         ÔòÁ                       ^
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -8.1993569132%)
+  color.adjust($color, $lightness: -5%)
+  
+  More info: https://sass-lang.com/d/color-functions
+
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:96:22:
+      96 Ôöé     background-color: lighten($primary-color, 20%);
+         ÔòÁ                       ^
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: https://sass-lang.com/d/import
+
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:96:22:
+      96 Ôöé     background-color: lighten($primary-color, 20%);
+         ÔòÁ                       ^
+
+
+  lighten() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: 51.256281407%)
+  color.adjust($color, $lightness: 20%)
+  
+  More info: https://sass-lang.com/d/color-functions
+
+
+X [ERROR] TS2339: Property '$implicit' does not exist on type 'never'.
+  The intersection 'NgIfContext<true> & NgForOfContext<string, string[]>' was reduced to 'never' because property '$implicit' has conflicting types in some constituents. [plugin angular-compiler]
+
+    src/app/features/admin-dashboard/propietarios/propietarios.html:31:28:
+      31 Ôöé             <option *ngFor="let city of cities" [value]="city" *ng...
+         ÔòÁ                             ~~~~~~~~~
+
+  Error occurs in the template of component AdminPropietarios.
+
+    src/app/features/admin-dashboard/propietarios/propietarios.ts:27:15:
+      27 Ôöé   templateUrl: './propietarios.html',
+         ÔòÁ                ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG5002: Can't have multiple template bindings on one element. Use only one attribute prefixed with * [plugin angular-compiler]
+
+    src/app/features/admin-dashboard/propietarios/propietarios.html:31:63:
+      31 Ôöé ...*ngFor="let city of cities" [value]="city" *ngIf="city !== 'all'">
+         ÔòÁ                                               ~~~~~~~~~~~~~~~~~~~~~~
+
+  Error occurs in the template of component AdminPropietarios.
+
+    src/app/features/admin-dashboard/propietarios/propietarios.ts:27:15:
+      27 Ôöé   templateUrl: './propietarios.html',
+         ÔòÁ                ~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2339: Property 'city' does not exist on type 'AdminPropietarios'. [plugin angular-compiler]
+
+    src/app/features/admin-dashboard/propietarios/propietarios.html:31:70:
+      31 Ôöé ...*ngFor="let city of cities" [value]="city" *ngIf="city !== 'all'">
+         ÔòÁ                                                      ~~~~
+
+  Error occurs in the template of component AdminPropietarios.
+
+    src/app/features/admin-dashboard/propietarios/propietarios.ts:27:15:
+      27 Ôöé   templateUrl: './propietarios.html',
+         ÔòÁ                ~~~~~~~~~~~~~~~~~~~~~
+
+

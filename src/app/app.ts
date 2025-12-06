@@ -16,6 +16,9 @@ export class App {
 
   get showFooter(): boolean {
     const currentUrl = this.router.url;
-    return !currentUrl.includes('/login') && !currentUrl.includes('/register');
+    return !currentUrl.includes('/login') &&
+      !currentUrl.includes('/register') &&
+      !currentUrl.includes('/admin') &&
+      !currentUrl.includes('/propietario');
   }
 }

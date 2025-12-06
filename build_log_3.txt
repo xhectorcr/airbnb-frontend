@@ -1,0 +1,90 @@
+
+> airbnb-frontend@0.0.0 build
+> ng build
+
+[33mÔØ»[39m Building...
+[32mÔ£ö[39m Building...
+[35mBrowser bundles[39m     
+[1mInitial chunk files[22m [2m | [22m[1mNames[22m           [2m | [22m [1mRaw size[22m[2m | [22m[1mEstimated transfer size[22m
+[32mmain-PCSAGSGM.js[39m    [2m | [22m[2mmain[22m            [2m | [22m[36m328.09 kB[39m[2m | [22m               [36m84.96 kB[39m
+[32mstyles-5INURTSO.css[39m [2m | [22m[2mstyles[22m          [2m | [22m  [36m0 bytes[39m[2m | [22m                [36m0 bytes[39m
+
+[1m [22m                   [2m | [22m[1mInitial total[22m   [2m | [22m[1m328.09 kB[22m[2m | [22m               [1m84.96 kB[22m
+
+
+[35mServer bundles[39m      
+[1mInitial chunk files[22m [2m | [22m[1mNames[22m           [2m | [22m [1mRaw size[22m
+[32mserver.mjs[39m          [2m | [22m[2mserver[22m          [2m | [22m[36m806.93 kB[39m[2m | [22m                       
+[32mmain.server.mjs[39m     [2m | [22m[2mmain.server[22m     [2m | [22m[36m776.31 kB[39m[2m | [22m                       
+[32mpolyfills.server.mjs[39m[2m | [22m[2mpolyfills.server[22m[2m | [22m[36m233.48 kB[39m[2m | [22m                       
+[32mchunk-L2MVFUKD.mjs[39m  [2m | [22m[2m-[22m               [2m | [22m  [36m1.32 kB[39m[2m | [22m                       
+[32mchunk-T55IDOPT.mjs[39m  [2m | [22m[2m-[22m               [2m | [22m[36m976 bytes[39m[2m | [22m                       
+
+[1mLazy chunk files[22m    [2m | [22m[1mNames[22m           [2m | [22m [1mRaw size[22m
+[32mchunk-HKQTHSU5.mjs[39m  [2m | [22m[2mxhr2[22m            [2m | [22m [36m12.15 kB[39m[2m | [22m                       
+[32mchunk-QN7HHIJH.mjs[39m  [2m | [22m[2mxhr2[22m            [2m | [22m [36m12.08 kB[39m[2m | [22m                       
+
+[35mPrerendered 3 static routes.[39m
+Application bundle generation complete. [9.740 seconds] - 2025-12-05T02:23:01.196Z
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:92:22:
+      92 Ôöé     background-color: darken($primary-color, 5%);
+         ÔòÁ                       ^
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: https://sass-lang.com/d/import
+
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:92:22:
+      92 Ôöé     background-color: darken($primary-color, 5%);
+         ÔòÁ                       ^
+
+
+  darken() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: -8.1993569132%)
+  color.adjust($color, $lightness: -5%)
+  
+  More info: https://sass-lang.com/d/color-functions
+
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:96:22:
+      96 Ôöé     background-color: lighten($primary-color, 20%);
+         ÔòÁ                       ^
+
+
+  Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
+  Use color.adjust instead.
+  
+  More info and automated migrator: https://sass-lang.com/d/import
+
+
+Ôû▓ [WARNING] Deprecation [plugin angular-sass]
+
+    src/app/features/auth/register/register.scss:96:22:
+      96 Ôöé     background-color: lighten($primary-color, 20%);
+         ÔòÁ                       ^
+
+
+  lighten() is deprecated. Suggestions:
+  
+  color.scale($color, $lightness: 51.256281407%)
+  color.adjust($color, $lightness: 20%)
+  
+  More info: https://sass-lang.com/d/color-functions
+
+
+Ôû▓ [WARNING] src/app/features/admin-dashboard/propietarios/propietarios.scss exceeded maximum budget. Budget 4.00 kB was not met by 2.04 kB with a total of 6.04 kB.
+
+
+Output location: E:\Sistema e informatica\Projects Hector\University Projects\airbnb-frontend\dist\airbnb-frontend
+

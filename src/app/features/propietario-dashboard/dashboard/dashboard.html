@@ -1,0 +1,133 @@
+<div class="dashboard-wrapper">
+
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>Panel de Propietario</h1>
+            <p>Gestiona tus inmuebles y disponibilidad</p>
+        </div>
+        <div class="stats-summary" style="display: flex; gap: 1rem; align-items: center;">
+            <div class="stat-item">
+                <span class="value">{{ properties.length }}</span>
+                <span class="label">Propiedades</span>
+            </div>
+            <button (click)="logout()" class="btn-logout"
+                style="background: white; border: 1px solid #fee2e2; color: #ef4444; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                Cerrar Sesión
+            </button>
+        </div>
+    </header>
+
+    <div class="dashboard-content">
+
+        <!-- SECTION: Create Property -->
+        <aside class="create-section">
+            <div class="card form-card">
+                <div class="card-header">
+                    <h3>{{ editingIndex !== null ? 'Editar Propiedad' : 'Nueva Propiedad' }}</h3>
+                    <p>{{ editingIndex !== null ? 'Modifica los detalles del inmueble' : 'Registra un nuevo inmueble' }}
+                    </p>
+                </div>
+                <form [formGroup]="propertyForm" (ngSubmit)="submitProperty()">
+                    <div class="input-group">
+                        <label>Nombre del inmueble</label>
+                        <input formControlName="name" type="text" placeholder="Ej. Casa en la playa" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Tipo de propiedad</label>
+                        <div class="select-wrapper">
+                            <select formControlName="type">
+                                <option value="casa">Casa</option>
+                                <option value="cuarto">Cuarto</option>
+                                <option value="departamento">Departamento</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Departamento (Ubicación)</label>
+                        <div class="select-wrapper">
+                            <select formControlName="department">
+                                <option value="" disabled selected>Selecciona un departamento</option>
+                                <option *ngFor="let dep of departments" [value]="dep">{{ dep }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Descripción</label>
+                        <textarea formControlName="description" rows="3"
+                            placeholder="Detalles importantes..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Teléfono de contacto</label>
+                        <input formControlName="phone" type="tel" placeholder="+52 ..." />
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" *ngIf="editingIndex !== null" (click)="cancelEdit()" class="btn-cancel">
+                            Cancelar
+                        </button>
+                        <button type="submit" [disabled]="propertyForm.invalid" class="btn-submit">
+                            <span *ngIf="editingIndex === null">+</span> {{ editingIndex !== null ? 'Guardar Cambios' :
+                            'Publicar Propiedad' }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </aside>
+
+        <!-- SECTION: Property List -->
+        <section class="list-section">
+            <div class="section-header">
+                <h3>Mis Propiedades</h3>
+            </div>
+
+            <div class="properties-grid">
+                <div *ngFor="let prop of properties; let i = index" class="property-card">
+                    <div class="property-icon" [ngClass]="prop.type">
+                        <span *ngIf="prop.type === 'casa'">🏠</span>
+                        <span *ngIf="prop.type === 'departamento'">🏢</span>
+                        <span *ngIf="prop.type === 'cuarto'">🛏️</span>
+                    </div>
+
+                    <div class="property-content">
+                        <div class="property-header">
+                            <h4>{{ prop.name }}</h4>
+                            <span class="status-badge" [ngClass]="prop.status">
+                                {{ prop.status === 'disponible' ? 'Disponible' : 'Alquilado' }}
+                            </span>
+                        </div>
+
+                        <p class="property-desc">{{ prop.description }}</p>
+
+                        <div class="property-meta">
+                            <span class="meta-item">📍 {{ prop.department }}</span>
+                            <span class="meta-item">📞 {{ prop.phone }}</span>
+                            <span class="meta-item tag">{{ prop.type }}</span>
+                        </div>
+
+                        <div class="property-actions">
+                            <button type="button" class="btn-action btn-edit" (click)="editProperty(i)">
+                                ✏️ Editar
+                            </button>
+                            <button class="btn-action" [class.btn-rent]="prop.status === 'disponible'"
+                                [class.btn-free]="prop.status === 'alquilado'" (click)="toggleStatus(i)">
+                                {{ prop.status === 'disponible' ? 'Marcar como Alquilado' : 'Habilitar Disponibilidad'
+                                }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div *ngIf="properties.length === 0" class="empty-state">
+                    <p>No tienes propiedades registradas aún.</p>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</div>
