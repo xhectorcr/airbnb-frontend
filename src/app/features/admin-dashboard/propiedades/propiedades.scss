@@ -273,3 +273,101 @@ $border-gray: #DDDDDD;
         transform: translateY(0);
     }
 }
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    .nav-link {
+        text-decoration: none;
+        color: #717171;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.2s;
+        cursor: pointer;
+
+        &:hover {
+            background: #f1f1f1;
+            color: #222;
+        }
+
+        &.active {
+            background: #222;
+            color: white;
+        }
+    }
+}
+
+
+
+/* Admin Actions Row in Card */
+.admin-actions-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: white;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background: #f7f7f7;
+        transform: translateY(-2px);
+    }
+
+    /* Specific styles */
+    &.message {
+        color: #2196F3;
+        border-color: #BBDEFB;
+        background: #E3F2FD;
+
+        &:hover {
+            background: #BBDEFB;
+        }
+    }
+
+    &.approval {
+        background: #E8F5E9;
+        color: #2E7D32;
+        border-color: #C8E6C9;
+
+        &:hover {
+            background: #C8E6C9;
+        }
+
+        &.approved {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #ffcdd2;
+
+            &:hover {
+                background: #ffcdd2;
+            }
+        }
+    }
+
+    &.delete {
+        color: #d32f2f;
+        border-color: #ffcdd2;
+        background: #ffebee;
+
+        &:hover {
+            background: #ffcdd2;
+        }
+    }
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PropiedadesService, Propiedad } from '../../../core/services/propiedades.service';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 interface Category {
     id: string;
@@ -14,7 +15,7 @@ interface Category {
     templateUrl: './propiedades.html',
     styleUrls: ['./propiedades.scss'],
     standalone: true,
-    imports: [CommonModule, FormsModule]
+    imports: [CommonModule, FormsModule, RouterModule]
 })
 export class AdminPropiedades implements OnInit {
 
@@ -116,6 +117,24 @@ export class AdminPropiedades implements OnInit {
             window.open(`https://wa.me/51${prop.propietarioTelefono}`, '_blank');
         } else {
             alert('El propietario de esta propiedad no tiene número de teléfono registrado.');
+        }
+    }
+
+    toggleApproval(prop: any) {
+        const newState = !prop.aprobada;
+        const action = newState ? 'activar' : 'desactivar';
+
+        if (confirm(`¿Estás seguro de que deseas ${action} esta propiedad?`)) {
+            this.propiedadesService.approveProperty(prop.id, newState).subscribe({
+                next: () => {
+                    prop.aprobada = newState;
+                    // alert(`Propiedad ${newState ? 'activada' : 'desactivada'} correctamente`);
+                },
+                error: (err) => {
+                    console.error('Error toggling approval', err);
+                    alert('Error al cambiar el estado de la propiedad');
+                }
+            });
         }
     }
 

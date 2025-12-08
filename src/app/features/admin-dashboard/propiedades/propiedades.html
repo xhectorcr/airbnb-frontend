@@ -18,6 +18,11 @@
                     <option *ngFor="let d of departamentos" [value]="d">{{ d }}</option>
                 </select>
             </div>
+
+            <div class="nav-links">
+                <a routerLink="/admin/propietarios" class="nav-link">Propietarios</a>
+                <a routerLink="/admin/propiedades" class="nav-link active">Propiedades</a>
+            </div>
         </div>
     </div>
 
@@ -52,6 +57,24 @@
                     <p class="listing-detail address">
                         📍 {{ listing.distrito }} - {{ listing.direccion }}
                     </p>
+
+                    <div class="admin-actions-row">
+                        <button class="action-btn message" title="Contactar Propietario"
+                            (click)="sendMessage(listing); $event.stopPropagation()">
+                            💬
+                        </button>
+
+                        <button class="action-btn approval" [class.approved]="listing.aprobada"
+                            [title]="listing.aprobada ? 'Ocultar del Home' : 'Mostrar en Home'"
+                            (click)="toggleApproval(listing); $event.stopPropagation()">
+                            {{ listing.aprobada ? '🚫' : '✅' }}
+                        </button>
+
+                        <button class="action-btn delete" title="Eliminar Propiedad"
+                            (click)="deleteProperty(listing); $event.stopPropagation()">
+                            🗑️
+                        </button>
+                    </div>
 
                 </div>
             </div>
@@ -117,18 +140,6 @@
                 </ul>
             </div>
 
-            <!-- Admin Actions -->
-            <div class="modal-actions" style="margin-top: 24px; border-top: 1px solid #ddd; padding-top: 16px;">
-                <button class="whatsapp-btn" (click)="sendMessage(selectedListing)"
-                    style="width: 100%; padding: 12px; background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <span style="font-size: 1.2rem;">💬</span> Contactar Propietario
-                </button>
-
-                <button class="delete-btn" (click)="deleteProperty(selectedListing)"
-                    style="width: 100%; padding: 12px; background: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">
-                    🗑️ Eliminar Propiedad
-                </button>
-            </div>
         </div>
     </div>
 
