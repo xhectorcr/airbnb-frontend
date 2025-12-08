@@ -10,10 +10,6 @@
                 <span class="value">{{ properties.length }}</span>
                 <span class="label">Propiedades</span>
             </div>
-            <button (click)="logout()" class="btn-logout"
-                style="background: white; border: 1px solid #fee2e2; color: #ef4444; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
-                Cerrar Sesión
-            </button>
         </div>
     </header>
 
@@ -29,40 +25,78 @@
                 </div>
                 <form [formGroup]="propertyForm" (ngSubmit)="submitProperty()">
                     <div class="input-group">
-                        <label>Nombre del inmueble</label>
-                        <input formControlName="name" type="text" placeholder="Ej. Casa en la playa" />
-                    </div>
-
-                    <div class="input-group">
-                        <label>Tipo de propiedad</label>
-                        <div class="select-wrapper">
-                            <select formControlName="type">
-                                <option value="casa">Casa</option>
-                                <option value="cuarto">Cuarto</option>
-                                <option value="departamento">Departamento</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Departamento (Ubicación)</label>
-                        <div class="select-wrapper">
-                            <select formControlName="department">
-                                <option value="" disabled selected>Selecciona un departamento</option>
-                                <option *ngFor="let dep of departments" [value]="dep">{{ dep }}</option>
-                            </select>
-                        </div>
+                        <label>Título del inmueble</label>
+                        <input formControlName="titulo" type="text" placeholder="Ej. Casa en la playa" />
                     </div>
 
                     <div class="input-group">
                         <label>Descripción</label>
-                        <textarea formControlName="description" rows="3"
+                        <textarea formControlName="descripcion" rows="3"
                             placeholder="Detalles importantes..."></textarea>
                     </div>
 
                     <div class="input-group">
-                        <label>Teléfono de contacto</label>
-                        <input formControlName="phone" type="tel" placeholder="+52 ..." />
+                        <label>Tipo de Propiedad</label>
+                        <div class="select-wrapper">
+                            <select formControlName="tipo">
+                                <option value="" disabled selected>Selecciona tipo</option>
+                                <option value="Cuarto">Cuarto</option>
+                                <option value="Depa">Depa</option>
+                                <option value="Casa">Casa</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Precio Mensual (S/)</label>
+                        <input formControlName="precioMensual" type="number" placeholder="0.00" />
+                    </div>
+
+                    <div class="row" style="display: flex; gap: 10px;">
+                        <div class="input-group half">
+                            <label>Habitaciones</label>
+                            <input formControlName="habitaciones" type="number" min="1" />
+                        </div>
+                        <div class="input-group half">
+                            <label>Baños</label>
+                            <input formControlName="banos" type="number" min="1" />
+                        </div>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label>Departamento</label>
+                        <div class="select-wrapper">
+                            <select formControlName="departamento">
+                                <option value="" disabled selected>Selecciona departamento</option>
+                                <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="input-group">
+                        <label>Dirección</label>
+                        <input formControlName="direccion" type="text" placeholder="Av. Principal 123" />
+                    </div>
+
+                    <div class="row" style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                            <input type="checkbox" formControlName="amoblado" /> Amoblado
+                        </label>
+                        <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                            <input type="checkbox" formControlName="aceptaMascotas" /> Acepta Mascotas
+                        </label>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Fotos (Máx 3)</label>
+                        <input type="file" multiple accept=".png, image/png" (change)="onFileSelected($event)"
+                            id="fileInput" />
+                        <small style="color: gray; font-size: 0.8rem;">Sube hasta 3 imágenes.</small>
+                        <small style="color: #d9534f; font-size: 0.8rem; display: block; font-weight: bold;">⚠️ Solo se
+                            aceptan archivos PNG.</small>
                     </div>
 
                     <div class="form-actions">
@@ -86,36 +120,42 @@
 
             <div class="properties-grid">
                 <div *ngFor="let prop of properties; let i = index" class="property-card">
-                    <div class="property-icon" [ngClass]="prop.type">
-                        <span *ngIf="prop.type === 'casa'">🏠</span>
-                        <span *ngIf="prop.type === 'departamento'">🏢</span>
-                        <span *ngIf="prop.type === 'cuarto'">🛏️</span>
+                    <!-- Image instead of icon -->
+                    <div class="property-image-container"
+                        style="width: 100px; height: 100px; overflow: hidden; border-radius: 8px; flex-shrink: 0; position: relative;">
+                        <img [src]="getImageUrl(prop.fotos && prop.fotos.length > 0 ? prop.fotos[0].url : '')"
+                            alt="Propiedad" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
 
                     <div class="property-content">
                         <div class="property-header">
-                            <h4>{{ prop.name }}</h4>
-                            <span class="status-badge" [ngClass]="prop.status">
-                                {{ prop.status === 'disponible' ? 'Disponible' : 'Alquilado' }}
-                            </span>
+                            <h4>{{ prop.titulo }}</h4>
                         </div>
 
-                        <p class="property-desc">{{ prop.description }}</p>
+                        <p class="property-desc">{{ prop.descripcion }}</p>
 
                         <div class="property-meta">
-                            <span class="meta-item">📍 {{ prop.department }}</span>
-                            <span class="meta-item">📞 {{ prop.phone }}</span>
-                            <span class="meta-item tag">{{ prop.type }}</span>
+                            <span class="meta-item">📍 {{ prop.departamento || prop.distrito }}</span>
+                            <span class="meta-item">💰 S/ {{ prop.precioMensual }}</span>
+                            <span class="meta-item">🛏️ {{ prop.habitaciones }} hab.</span>
+                            <span class="meta-item">🚽 {{ prop.banos }} baños</span>
                         </div>
 
                         <div class="property-actions">
-                            <button type="button" class="btn-action btn-edit" (click)="editProperty(i)">
+                            <button type="button" class="btn-action btn-edit" (click)="editProperty(i)"
+                                style="margin-right: 10px;">
                                 ✏️ Editar
                             </button>
-                            <button class="btn-action" [class.btn-rent]="prop.status === 'disponible'"
-                                [class.btn-free]="prop.status === 'alquilado'" (click)="toggleStatus(i)">
-                                {{ prop.status === 'disponible' ? 'Marcar como Alquilado' : 'Habilitar Disponibilidad'
-                                }}
+                            <button type="button" class="btn-action btn-toggle" (click)="toggleRentStatus(prop)"
+                                [style.background-color]="prop.alquilado ? '#ffebee' : '#e8f5e9'"
+                                [style.color]="prop.alquilado ? '#c62828' : '#2e7d32'"
+                                [style.border]="'1px solid ' + (prop.alquilado ? '#c62828' : '#2e7d32')"
+                                style="margin-right: 10px; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                                {{ prop.alquilado ? '🔴 Alquilado' : '🟢 Disponible' }}
+                            </button>
+                            <button type="button" class="btn-action btn-delete" (click)="deleteProperty(prop.id)"
+                                style="background-color: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                                🗑️ Borrar
                             </button>
                         </div>
                     </div>
@@ -128,6 +168,44 @@
             </div>
 
         </section>
+
+
+        <!-- Profile Edit Modal -->
+        <div *ngIf="isProfileModalOpen" class="modal-overlay" (click)="closeProfileModal()">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h3>Editar Perfil</h3>
+                    <button class="close-btn" (click)="closeProfileModal()">✕</button>
+                </div>
+                <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                    <div class="input-group">
+                        <label>Nombre Completo</label>
+                        <input formControlName="nombre" type="text" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Correo Electrónico</label>
+                        <input formControlName="email" type="email" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Teléfono</label>
+                        <input formControlName="telefono" type="text" placeholder="999999999" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Dirección</label>
+                        <input formControlName="direccion" type="text" placeholder="Av. Principal 123" />
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" (click)="closeProfileModal()">Cancelar</button>
+                        <button type="submit" class="btn-submit" [disabled]="profileForm.invalid">Guardar
+                            Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </div>
 </div>

@@ -14,6 +14,7 @@ import { AuthService } from '../../../core/services/auth.service';
 export class RegisterComponent {
   registerForm: FormGroup;
   error: string = '';
+  successMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -21,18 +22,39 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      name: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{9}$')]],
+      birthdate: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      // Mock registration logic for now, as AuthService might not have register method yet
-      console.log('Registering user:', this.registerForm.value);
-      // Assuming successful registration redirects to home or login
-      this.router.navigate(['/login']);
+      this.error = '';
+      this.successMessage = '';
+      const { firstName, lastName, email, phone, password } = this.registerForm.value;
+      const userData = {
+        nombre: `${firstName} ${lastName}`,
+        email,
+        password,
+        telefono: phone
+      };
+
+      this.authService.register(userData).subscribe({
+        next: () => {
+          this.successMessage = '¡Registro exitoso! Redirigiendo al login...';
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        },
+        error: (err) => {
+          this.error = 'Error al registrar el usuario. Intenta con otro correo.';
+          console.error('Register error:', err);
+        }
+      });
     } else {
       this.registerForm.markAllAsTouched();
     }

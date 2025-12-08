@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { PropiedadesService } from '../../../core/services/propiedades.service';
 
 interface Landlord {
   id: number;
@@ -24,11 +26,13 @@ interface Landlord {
   standalone: true, // Make sure it's standalone if imports are used
   imports: [
     CommonModule,
-    FormsModule   // ← necesario para usar ngModel
+    FormsModule,
+    RouterModule
   ],
   templateUrl: './propietarios.html',
   styleUrls: ['./propietarios.scss']
 })
+
 export class AdminPropietarios implements OnInit {
   searchTerm: string = '';
   filterCity: string = 'all';
@@ -36,140 +40,165 @@ export class AdminPropietarios implements OnInit {
   landlords: Landlord[] = [];
   cities: string[] = [];
 
-  constructor(private authService: AuthService) { }
+  // Properties Modal
+  showOwnerProperties: boolean = false;
+  ownerProperties: any[] = [];
+  allProperties: any[] = []; // Store all properties to filter locally
+
+  constructor(
+    private authService: AuthService,
+    private propiedadesService: PropiedadesService, // Injected
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.loadLandlords();
-    this.loadCities();
+    this.loadAllProperties(); // Pre-load properties for quick filtering
+    this.initialMockData();
   }
 
   loadLandlords(): void {
-    this.landlords = [
-      {
-        id: 1,
-        name: 'María González',
-        photo: '👩',
-        rating: 4.8,
-        reviews: 24,
-        properties: 3,
-        city: 'Ciudad de México',
-        phone: '+52 55 1234 5678',
-        email: 'maria.gonzalez@email.com',
-        verified: true,
-        joinDate: 'Marzo 2023',
-        response: '2 horas',
-        propertyTypes: ['Departamento', 'Cuarto']
+    this.authService.getAllUsers().subscribe({
+      next: (users) => {
+        // Filter only non-admin users (owners/regular users)
+        const owners = users.filter(u => !u.esAdmin);
+
+        this.landlords = owners.map(u => ({
+          id: u.id,
+          name: u.nombre,
+          email: u.email,
+          phone: u.telefono || '', // Use real phone
+          city: 'Desconocido',
+          photo: '👤',
+          rating: 0,
+          reviews: 0,
+          properties: u.propiedadesCount || 0, // Use real count
+          verified: false,
+          joinDate: '2023',
+          response: 'N/A',
+          propertyTypes: []
+        }));
+        this.cd.detectChanges();
       },
-      {
-        id: 2,
-        name: 'Carlos Rodríguez',
-        photo: '👨',
-        rating: 4.9,
-        reviews: 42,
-        properties: 5,
-        city: 'Guadalajara',
-        phone: '+52 33 9876 5432',
-        email: 'carlos.rod@email.com',
-        verified: true,
-        joinDate: 'Enero 2023',
-        response: '1 hora',
-        propertyTypes: ['Casa', 'Departamento']
-      },
-      {
-        id: 3,
-        name: 'Ana Martínez',
-        photo: '👩‍🦰',
-        rating: 4.7,
-        reviews: 18,
-        properties: 2,
-        city: 'Monterrey',
-        phone: '+52 81 5555 4444',
-        email: 'ana.martinez@email.com',
-        verified: true,
-        joinDate: 'Mayo 2023',
-        response: '3 horas',
-        propertyTypes: ['Cuarto']
-      },
-      {
-        id: 4,
-        name: 'Jorge López',
-        photo: '👨‍💼',
-        rating: 4.6,
-        reviews: 31,
-        properties: 4,
-        city: 'Puebla',
-        phone: '+52 22 3333 2222',
-        email: 'jorge.lopez@email.com',
-        verified: false,
-        joinDate: 'Julio 2023',
-        response: '4 horas',
-        propertyTypes: ['Departamento', 'Casa']
-      },
-      {
-        id: 5,
-        name: 'Laura Sánchez',
-        photo: '👩‍💻',
-        rating: 5.0,
-        reviews: 15,
-        properties: 2,
-        city: 'Ciudad de México',
-        phone: '+52 55 7777 8888',
-        email: 'laura.sanchez@email.com',
-        verified: true,
-        joinDate: 'Febrero 2023',
-        response: '30 min',
-        propertyTypes: ['Cuarto']
-      },
-      {
-        id: 6,
-        name: 'Roberto Fernández',
-        photo: '👨‍🏫',
-        rating: 4.5,
-        reviews: 27,
-        properties: 6,
-        city: 'Guadalajara',
-        phone: '+52 33 4444 3333',
-        email: 'roberto.f@email.com',
-        verified: true,
-        joinDate: 'Abril 2023',
-        response: '2 horas',
-        propertyTypes: ['Casa', 'Departamento', 'Cuarto']
+      error: (err) => {
+        console.error('Error cargando usuarios', err);
       }
-    ];
+    });
+  }
+
+  loadAllProperties() {
+    this.propiedadesService.getAdminAllProperties().subscribe(props => {
+      this.allProperties = props;
+    });
+  }
+
+  initialMockData(): void {
   }
 
   loadCities(): void {
-    this.cities = [...new Set(this.landlords.map(l => l.city))];
+    // Removed as per request
   }
 
   get filteredLandlords(): Landlord[] {
     return this.landlords.filter(landlord => {
       const matchesSearch = landlord.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        landlord.city.toLowerCase().includes(this.searchTerm.toLowerCase());
-      const matchesCity = this.filterCity === 'all' || landlord.city === this.filterCity;
-      return matchesSearch && matchesCity;
+        landlord.email.toLowerCase().includes(this.searchTerm.toLowerCase());
+      return matchesSearch;
     });
   }
 
-  openModal(landlord: Landlord): void {
-    this.selectedLandlord = landlord;
-  }
-
-  closeModal(): void {
-    this.selectedLandlord = null;
-  }
+  // selectedLandlord: Landlord | null = null; // Removed
+  // openModal removed
+  // closeModal removed
 
   sendMessage(landlord: Landlord): void {
-    console.log('Enviando mensaje a:', landlord.name);
-    // Implementar lógica de envío de mensaje
+    if (landlord.phone) {
+      window.open(`https://wa.me/51${landlord.phone}`, '_blank');
+    } else {
+      alert('Este usuario no tiene número de teléfono registrado');
+    }
   }
 
   viewProperties(landlord: Landlord): void {
-    console.log('Ver propiedades de:', landlord.name);
-    // Implementar navegación a propiedades
+    console.log('Viewing properties for landlord:', landlord.id, landlord.name);
+    console.log('Total properties loaded:', this.allProperties.length);
+
+    this.ownerProperties = this.allProperties.filter(p => {
+      // Check for both cases just to be safe with C# serialization
+      const pUserId = p.usuarioId !== undefined ? p.usuarioId : p.UsuarioId;
+      return pUserId === landlord.id;
+    });
+
+    console.log('Filtered properties:', this.ownerProperties.length);
+    this.showOwnerProperties = true;
+  }
+
+  closeOwnerProperties() {
+    this.showOwnerProperties = false;
+    this.ownerProperties = [];
+  }
+
+  getImageUrl(url: string | undefined): string {
+    if (!url) return 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600';
+    if (url.startsWith('http')) return url;
+    return `http://localhost:5105${url}`;
+  }
+
+  deleteOwner(landlord: Landlord): void {
+    if (confirm(`¿Estás seguro de que deseas eliminar al propietario ${landlord.name}? Esto eliminará también TODAS sus propiedades, reservas y reseñas asociadas.`)) {
+      this.authService.deleteUser(landlord.id).subscribe({
+        next: () => {
+          this.landlords = this.landlords.filter(l => l.id !== landlord.id);
+          this.loadCities();
+          // this.closeModal(); // Removed since modal is gone
+          this.cd.detectChanges(); // Force update
+          alert('Propietario eliminado correctamente');
+        },
+        error: (err) => {
+          console.error('Error al eliminar propietario', err);
+          alert('Error al eliminar propietario: ' + (err.error?.error || 'Error desconocido'));
+        }
+      });
+    }
   }
 
   logout(): void {
     this.authService.logout();
+  }
+
+  toggleRentStatus(prop: any, event: Event): void {
+    event.stopPropagation(); // Prevent opening something else if card is clickable
+    const newStatus = !prop.alquilado;
+    this.propiedadesService.toggleRentStatus(prop.id, newStatus).subscribe({
+      next: () => {
+        prop.alquilado = newStatus;
+        alert(`Propiedad marcada como ${newStatus ? 'Alquilada' : 'Disponible'}`);
+      },
+      error: (err) => console.error('Error updating status', err)
+    });
+  }
+
+  deleteProperty(prop: any, event: Event): void {
+    event.stopPropagation();
+    if (confirm(`¿Estás seguro de que deseas eliminar la propiedad "${prop.titulo}"? Esta acción no se puede deshacer.`)) {
+      this.propiedadesService.deleteProperty(prop.id).subscribe({
+        next: () => {
+          this.ownerProperties = this.ownerProperties.filter(p => p.id !== prop.id);
+          this.allProperties = this.allProperties.filter(p => p.id !== prop.id); // Update global list too
+
+          // Update owner stats locally if possible
+          const owner = this.landlords.find(l => l.id === (prop.usuarioId || prop.UsuarioId));
+          if (owner) {
+            owner.properties = Math.max(0, owner.properties - 1);
+          }
+
+          alert('Propiedad eliminada correctamente');
+        },
+        error: (err) => {
+          console.error('Error deleting property', err);
+          alert('Error al eliminar propiedad: ' + (err.error?.error || 'Error desconocido'));
+        }
+      });
+    }
   }
 }

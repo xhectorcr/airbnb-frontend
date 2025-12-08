@@ -2,6 +2,15 @@
   <div class="auth-card">
     <h1>Iniciar sesión</h1>
 
+    <div class="role-selector">
+      <button type="button" [class.active]="loginType === 'owner'" (click)="setLoginType('owner')">
+        Propietario
+      </button>
+      <button type="button" [class.active]="loginType === 'admin'" (click)="setLoginType('admin')">
+        Admin
+      </button>
+    </div>
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
       <div class="form-group">
         <label for="email">Correo electrónico</label>

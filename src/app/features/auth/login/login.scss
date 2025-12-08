@@ -23,7 +23,39 @@
     color: #222;
     text-align: center;
   }
+
+  .role-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #ddd;
+
+    button {
+      background: none;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #717171;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      flex: 1;
+
+      &:hover {
+        color: #222;
+        background-color: #f7f7f7 !important;
+      }
+
+      &.active {
+        color: #222;
+        border-bottom-color: #222;
+        font-weight: 600;
+      }
+    }
+  }
 }
+
 
 .auth-form {
   .form-group {

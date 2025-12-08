@@ -14,13 +14,7 @@
       <!-- Right Menu -->
       <div class="right-menu">
 
-        <button class="icon-button">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-        </button>
+
         <div class="user-menu" (click)="toggleMenu()">
           <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -38,15 +32,13 @@
         <!-- Dropdown Menu -->
         @if (isMenuOpen) {
         <div class="dropdown-menu">
+          @if (!isLoggedIn) {
           <div class="menu-item bold" routerLink="/login" (click)="toggleMenu()">Iniciar sesión</div>
           <div class="menu-item" routerLink="/register" (click)="toggleMenu()">Regístrate</div>
-          <div class="divider"></div>
-          <div class="menu-item bold" routerLink="/" (click)="toggleMenu()">Explorar Alojamientos</div>
-          <div class="menu-item" (click)="toggleMenu()">Mis Reservas</div>
-          <div class="menu-item" (click)="toggleMenu()">Mis Publicaciones</div>
-          <div class="menu-item" (click)="toggleMenu()">Publicar Alojamiento</div>
-          <div class="divider"></div>
-          <div class="menu-item" (click)="toggleMenu()">Ayuda</div>
+          } @else {
+          <div class="menu-item" (click)="editProfile()">Editar Perfil</div>
+          <div class="menu-item" (click)="logout()">Cerrar sesión</div>
+          }
         </div>
         }
       </div>

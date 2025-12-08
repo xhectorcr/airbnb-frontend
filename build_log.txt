@@ -5,13 +5,26 @@
 [33mÔØ»[39m Building...
 [32mÔ£ö[39m Building...
 [35mPrerendered 0 static routes.[39m
-Application bundle generation failed. [5.278 seconds] - 2025-12-05T02:05:28.038Z
+Application bundle generation failed. [2.782 seconds] - 2025-12-07T23:50:11.501Z
+
+Ôû▓ [WARNING] NG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator. [plugin angular-compiler]
+
+    src/app/pages/home/home.html:38:34:
+      38 Ôöé ...       [src]="listing.fotos?.length ? listing.fotos[0].url : 'h...
+         ÔòÁ                                 ~~~~~~
+
+  Warning occurs in the template of component Home.
+
+    src/app/pages/home/home.ts:13:15:
+      13 Ôöé   templateUrl: './home.html',
+         ÔòÁ                ~~~~~~~~~~~~~
+
 
 Ôû▓ [WARNING] Deprecation [plugin angular-sass]
 
-    src/app/features/auth/register/register.scss:92:22:
-      92 Ôöé     background-color: darken($primary-color, 5%);
-         ÔòÁ                       ^
+    src/app/features/auth/register/register.scss:111:22:
+      111 Ôöé     background-color: darken($primary-color, 5%);
+          ÔòÁ                       ^
 
 
   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
@@ -22,9 +35,9 @@ Application bundle generation failed. [5.278 seconds] - 2025-12-05T02:05:28.038Z
 
 Ôû▓ [WARNING] Deprecation [plugin angular-sass]
 
-    src/app/features/auth/register/register.scss:92:22:
-      92 Ôöé     background-color: darken($primary-color, 5%);
-         ÔòÁ                       ^
+    src/app/features/auth/register/register.scss:111:22:
+      111 Ôöé     background-color: darken($primary-color, 5%);
+          ÔòÁ                       ^
 
 
   darken() is deprecated. Suggestions:
@@ -37,9 +50,9 @@ Application bundle generation failed. [5.278 seconds] - 2025-12-05T02:05:28.038Z
 
 Ôû▓ [WARNING] Deprecation [plugin angular-sass]
 
-    src/app/features/auth/register/register.scss:96:22:
-      96 Ôöé     background-color: lighten($primary-color, 20%);
-         ÔòÁ                       ^
+    src/app/features/auth/register/register.scss:115:22:
+      115 Ôöé     background-color: lighten($primary-color, 25%);
+          ÔòÁ                       ^
 
 
   Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.
@@ -50,56 +63,29 @@ Application bundle generation failed. [5.278 seconds] - 2025-12-05T02:05:28.038Z
 
 Ôû▓ [WARNING] Deprecation [plugin angular-sass]
 
-    src/app/features/auth/register/register.scss:96:22:
-      96 Ôöé     background-color: lighten($primary-color, 20%);
-         ÔòÁ                       ^
+    src/app/features/auth/register/register.scss:115:22:
+      115 Ôöé     background-color: lighten($primary-color, 25%);
+          ÔòÁ                       ^
 
 
   lighten() is deprecated. Suggestions:
   
-  color.scale($color, $lightness: 51.256281407%)
-  color.adjust($color, $lightness: 20%)
+  color.scale($color, $lightness: 64.0703517588%)
+  color.adjust($color, $lightness: 25%)
   
   More info: https://sass-lang.com/d/color-functions
 
 
-X [ERROR] TS2339: Property '$implicit' does not exist on type 'never'.
-  The intersection 'NgIfContext<true> & NgForOfContext<string, string[]>' was reduced to 'never' because property '$implicit' has conflicting types in some constituents. [plugin angular-compiler]
+X [ERROR] TS2531: Object is possibly 'null'. [plugin angular-compiler]
 
-    src/app/features/admin-dashboard/propietarios/propietarios.html:31:28:
-      31 Ôöé             <option *ngFor="let city of cities" [value]="city" *ng...
-         ÔòÁ                             ~~~~~~~~~
+    src/app/pages/home/home.html:74:67:
+      74 Ôöé ...os?.length ? selectedListing.fotos[0].url : 'https://images.uns...
+         ÔòÁ                                 ~~~~~
 
-  Error occurs in the template of component AdminPropietarios.
+  Error occurs in the template of component Home.
 
-    src/app/features/admin-dashboard/propietarios/propietarios.ts:27:15:
-      27 Ôöé   templateUrl: './propietarios.html',
-         ÔòÁ                ~~~~~~~~~~~~~~~~~~~~~
-
-
-X [ERROR] NG5002: Can't have multiple template bindings on one element. Use only one attribute prefixed with * [plugin angular-compiler]
-
-    src/app/features/admin-dashboard/propietarios/propietarios.html:31:63:
-      31 Ôöé ...*ngFor="let city of cities" [value]="city" *ngIf="city !== 'all'">
-         ÔòÁ                                               ~~~~~~~~~~~~~~~~~~~~~~
-
-  Error occurs in the template of component AdminPropietarios.
-
-    src/app/features/admin-dashboard/propietarios/propietarios.ts:27:15:
-      27 Ôöé   templateUrl: './propietarios.html',
-         ÔòÁ                ~~~~~~~~~~~~~~~~~~~~~
-
-
-X [ERROR] TS2339: Property 'city' does not exist on type 'AdminPropietarios'. [plugin angular-compiler]
-
-    src/app/features/admin-dashboard/propietarios/propietarios.html:31:70:
-      31 Ôöé ...*ngFor="let city of cities" [value]="city" *ngIf="city !== 'all'">
-         ÔòÁ                                                      ~~~~
-
-  Error occurs in the template of component AdminPropietarios.
-
-    src/app/features/admin-dashboard/propietarios/propietarios.ts:27:15:
-      27 Ôöé   templateUrl: './propietarios.html',
-         ÔòÁ                ~~~~~~~~~~~~~~~~~~~~~
+    src/app/pages/home/home.ts:13:15:
+      13 Ôöé   templateUrl: './home.html',
+         ÔòÁ                ~~~~~~~~~~~~~
 
 

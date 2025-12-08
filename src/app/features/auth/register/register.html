@@ -66,6 +66,14 @@
         </div>
       </div>
 
+      <div *ngIf="successMessage" class="success-alert" style="color: green; text-align: center; margin-bottom: 15px;">
+        {{ successMessage }}
+      </div>
+
+      <div *ngIf="error" class="error-alert" style="color: red; text-align: center; margin-bottom: 15px;">
+        {{ error }}
+      </div>
+
       <button type="submit" class="submit-btn" [disabled]="registerForm.invalid">
         Registrarse
       </button>

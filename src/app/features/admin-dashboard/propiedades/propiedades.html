@@ -1,0 +1,135 @@
+<div class="airbnb-home">
+
+    <!-- Categorías + Filtro -->
+    <div class="categories-border">
+        <div class="categories-container">
+            <div class="categories-scroll">
+                <button *ngFor="let category of categories" class="category-button"
+                    [class.active]="activeCategory === category.id" (click)="setActiveCategory(category.id)">
+                    <span class="category-icon">{{ category.icon }}</span>
+                    <span class="category-name">{{ category.name }}</span>
+                </button>
+            </div>
+
+            <!-- Departamento -->
+            <div class="district-filter">
+                <select (change)="setDepartamento($any($event.target).value)" [value]="selectedDepartamento">
+                    <option value="all">Todos los departamentos</option>
+                    <option *ngFor="let d of departamentos" [value]="d">{{ d }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listado -->
+    <main class="main-content">
+        <div class="listings-grid">
+
+            <div *ngFor="let listing of filteredListings" class="listing-card" (click)="openModal(listing)">
+
+                <!-- Imagen -->
+                <div class="listing-image-container">
+                    <img [src]="getImageUrl(listing.fotos && listing.fotos.length > 0 ? listing.fotos[0]?.url : listing.fotos?.[0])"
+                        [alt]="listing.titulo" class="listing-image">
+                    <span *ngIf="listing.alquilado" class="availability-badge rented">Alquilado 🔒</span>
+                    <span *ngIf="!listing.alquilado" class="availability-badge available">Disponible 🟢</span>
+                </div>
+
+                <!-- Info -->
+                <div class="listing-info">
+
+                    <h3 class="listing-title">{{ listing.titulo || 'Sin título' }}</h3>
+
+                    <div class="listing-price-container">
+                        <span class="price-value">S/ {{ listing.precioMensual || 0 }}</span>
+                        <span class="price-period">/mes</span>
+                    </div>
+
+                    <p class="listing-detail type-location">
+                        {{ listing.departamento || 'Departamento' }}
+                    </p>
+
+                    <p class="listing-detail address">
+                        📍 {{ listing.distrito }} - {{ listing.direccion }}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL -->
+    <div class="modal-background" *ngIf="modalOpen" (click)="closeModal()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <button class="modal-close" (click)="closeModal()">×</button>
+
+            <div class="modal-header-custom" style="margin-bottom: 20px;">
+                <h2 style="margin: 0;">{{ selectedListing?.titulo }}</h2>
+                <span style="font-size: 1.2rem; font-weight: bold; color: #444;">S/ {{ selectedListing?.precioMensual }}
+                    <small style="font-weight: normal; font-size: 0.9rem;">/ mes</small></span>
+            </div>
+
+            <img class="modal-main-img"
+                [src]="getImageUrl(selectedListing?.fotos && selectedListing?.fotos.length > 0 ? selectedListing?.fotos[0]?.url : null)"
+                alt="foto principal"
+                style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;">
+
+            <!-- Gallery -->
+            <div class="modal-gallery" *ngIf="selectedListing?.fotos && selectedListing!.fotos.length > 1"
+                style="display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px;">
+                <img *ngFor="let photo of selectedListing!.fotos.slice(1)" [src]="getImageUrl(photo.url)"
+                    style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;">
+            </div>
+
+            <div class="modal-details-grid"
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <div><strong>Tipo:</strong> {{ selectedListing?.tipo === 'Depa' ? 'Departamento' : selectedListing?.tipo
+                    }}</div>
+                <div><strong>Departamento:</strong> {{ selectedListing?.departamento }}</div>
+                <div><strong>Estado:</strong> <span [style.color]="selectedListing?.alquilado ? '#c62828' : '#2e7d32'"
+                        style="font-weight: bold;">{{ selectedListing?.alquilado ? 'Alquilado' : 'Disponible' }}</span>
+                </div>
+                <div><strong>Dirección:</strong> {{ selectedListing?.direccion }}</div>
+                <div><strong>Habitaciones:</strong> {{ selectedListing?.habitaciones }}</div>
+                <div><strong>Baños:</strong> {{ selectedListing?.banos }}</div>
+                <div><strong>Amoblado:</strong> {{ selectedListing?.amoblado ? 'Sí' : 'No' }}</div>
+                <div><strong>Mascotas:</strong> {{ selectedListing?.aceptaMascotas ? 'Sí' : 'No' }}</div>
+                <div><strong>Propietario:</strong> {{ selectedListing?.propietarioName || 'Desconocido' }}</div>
+            </div>
+
+            <div class="modal-description" style="margin-bottom: 20px;">
+                <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Descripción</h3>
+                <p style="line-height: 1.5; color: #555;">{{ selectedListing?.descripcion }}</p>
+            </div>
+
+            <div class="modal-services"
+                *ngIf="selectedListing?.internetIncluido || selectedListing?.aguaIncluida || selectedListing?.luzIncluida">
+                <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Servicios Incluidos</h3>
+                <ul style="list-style: none; padding: 0; display: flex; gap: 15px; flex-wrap: wrap;">
+                    <li *ngIf="selectedListing?.internetIncluido"
+                        style="background: #eee; padding: 5px 10px; border-radius: 15px;">🌐 Internet</li>
+                    <li *ngIf="selectedListing?.aguaIncluida"
+                        style="background: #eee; padding: 5px 10px; border-radius: 15px;">💧
+                        Agua</li>
+                    <li *ngIf="selectedListing?.luzIncluida"
+                        style="background: #eee; padding: 5px 10px; border-radius: 15px;">💡
+                        Luz</li>
+                </ul>
+            </div>
+
+            <!-- Admin Actions -->
+            <div class="modal-actions" style="margin-top: 24px; border-top: 1px solid #ddd; padding-top: 16px;">
+                <button class="whatsapp-btn" (click)="sendMessage(selectedListing)"
+                    style="width: 100%; padding: 12px; background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <span style="font-size: 1.2rem;">💬</span> Contactar Propietario
+                </button>
+
+                <button class="delete-btn" (click)="deleteProperty(selectedListing)"
+                    style="width: 100%; padding: 12px; background: #ffebee; color: #d32f2f; border: 1px solid #ffcdd2; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s;">
+                    🗑️ Eliminar Propiedad
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

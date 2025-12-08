@@ -1,203 +1,134 @@
-<div class="dashboard-container">
-  <div class="dashboard-wrapper">
-    <!-- Header -->
-    <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <h1 class="title">Propietarios Registrados</h1>
-        <p class="subtitle">Encuentra y contacta a propietarios verificados</p>
+<div class="airbnb-home">
+  <!-- Top Filters -->
+  <div class="categories-border">
+    <div class="categories-container">
+      <div class="header-title">
+        <h1>Propietarios</h1>
+        <p>Administra los usuarios registrados</p>
       </div>
-      <button (click)="logout()" class="btn-logout"
-        style="background: white; border: 1px solid #fee2e2; color: #ef4444; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
-        Cerrar Sesión
-      </button>
-    </div>
 
-    <!-- Barra de búsqueda y filtros -->
-    <div class="search-bar">
-      <div class="search-filters">
-        <div class="search-input-wrapper">
-          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      <div class="filters-actions">
+
+        <!-- Search -->
+        <div class="search-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
-          <input type="text" placeholder="Buscar por nombre o ciudad..." [(ngModel)]="searchTerm"
-            class="search-input" />
+          <input type="text" placeholder="Buscar..." [(ngModel)]="searchTerm" class="search-input" />
         </div>
 
-        <div class="filter-wrapper">
-          <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-          </svg>
-          <select [(ngModel)]="filterCity" class="filter-select">
-            <option value="all">Todas las ciudades</option>
-            <option *ngFor="let city of cities" [value]="city">
-              {{ city }}
-            </option>
-          </select>
+        <!-- City Filter REMOVED -->
+
+        <div class="nav-links">
+          <a routerLink="/admin/propietarios" class="nav-link active">Propietarios</a>
+          <a routerLink="/admin/propiedades" class="nav-link">Propiedades</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Grid de propietarios -->
-    <div class="landlords-grid">
-      <div *ngFor="let landlord of filteredLandlords" class="landlord-card" (click)="openModal(landlord)">
-        <div class="card-content">
-          <div class="card-header">
-            <div class="landlord-info">
-              <div class="photo">{{ landlord.photo }}</div>
-              <div>
-                <h3 class="landlord-name">{{ landlord.name }}</h3>
-                <div class="landlord-city">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  {{ landlord.city }}
-                </div>
-              </div>
-            </div>
-            <span *ngIf="landlord.verified" class="verified-badge">
-              ✓ Verificado
-            </span>
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="listings-grid">
+
+      <div *ngFor="let landlord of filteredLandlords" class="listing-card landlord-profile-card">
+
+        <!-- Header: Avatar & Name -->
+        <div class="card-header-profile">
+          <div class="avatar-circle">
+            <span class="avatar-emoji">{{ landlord.photo }}</span>
           </div>
-
-          <div class="card-body">
-            <div class="rating-row">
-              <div class="rating">
-                <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
-                  stroke="currentColor" stroke-width="2">
-                  <polygon
-                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                  </polygon>
-                </svg>
-                <span class="rating-value">{{ landlord.rating }}</span>
-                <span class="reviews-count">({{ landlord.reviews }} reseñas)</span>
-              </div>
-            </div>
-
-            <div class="properties-count">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-              </svg>
-              <span>{{ landlord.properties }} propiedades</span>
-            </div>
-
-            <div class="property-types">
-              <span *ngFor="let type of landlord.propertyTypes" class="type-badge">
-                {{ type }}
-              </span>
-            </div>
-
-            <div class="response-time">
-              <p>Responde en: <span class="response-value">{{ landlord.response }}</span></p>
-            </div>
+          <div class="profile-title">
+            <h3 class="landlord-name">{{ landlord.name }}</h3>
+            <span class="landlord-role">Propietario</span>
           </div>
         </div>
+
+        <div class="card-divider"></div>
+
+        <!-- Body: Contact Info & Stats -->
+        <div class="card-body-profile">
+
+          <div class="info-row">
+            <span class="info-icon">📧</span>
+            <span class="info-text" [title]="landlord.email">{{ landlord.email }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-icon">📞</span>
+            <span class="info-text">{{ landlord.phone || 'Sin teléfono' }}</span>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-item">
+              <span class="stat-value">{{ landlord.properties }}</span>
+              <span class="stat-label">Propiedades</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer: Actions -->
+        <div class="card-footer-actions">
+          <button class="btn-action-icon message" (click)="sendMessage(landlord)" title="Enviar Mensaje">
+            💬
+          </button>
+          <button class="btn-action-icon view" (click)="viewProperties(landlord)" title="Ver Propiedades">
+            🏠
+          </button>
+          <button class="btn-action-icon delete" (click)="deleteOwner(landlord)" title="Eliminar Usuario">
+            🗑️
+          </button>
+        </div>
+
       </div>
     </div>
 
     <div *ngIf="filteredLandlords.length === 0" class="no-results">
-      <p>No se encontraron propietarios</p>
+      <p>No se encontraron propietarios.</p>
     </div>
-  </div>
+  </main>
 
-  <!-- Modal de detalles -->
-  <div *ngIf="selectedLandlord" class="modal-overlay" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
+  <!-- Owner Properties Modal -->
+  <div *ngIf="showOwnerProperties" class="modal-overlay" (click)="closeOwnerProperties()">
+    <div class="modal-content properties-modal" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <div class="modal-landlord-info">
-          <div class="modal-photo">{{ selectedLandlord.photo }}</div>
-          <div>
-            <h2 class="modal-name">{{ selectedLandlord.name }}</h2>
-            <div class="modal-city">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              {{ selectedLandlord.city }}
-            </div>
-          </div>
-        </div>
-        <button class="close-button" (click)="closeModal()">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+        <h2 class="modal-name">Propiedades del Usuario</h2>
+        <button class="close-button" (click)="closeOwnerProperties()">✕</button>
       </div>
 
       <div class="modal-body">
-        <div class="modal-rating">
-          <div class="rating-display">
-            <svg class="star-icon-large" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
-              stroke="currentColor" stroke-width="2">
-              <polygon
-                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-              </polygon>
-            </svg>
-            <span class="rating-large">{{ selectedLandlord.rating }}</span>
-          </div>
-          <span class="reviews-large">({{ selectedLandlord.reviews }} reseñas)</span>
-          <span *ngIf="selectedLandlord.verified" class="verified-badge-modal">
-            ✓ Verificado
-          </span>
+        <div *ngIf="ownerProperties.length === 0" class="no-results">
+          <p>Este usuario no tiene propiedades registradas.</p>
         </div>
 
-        <div class="stats-grid">
-          <div class="stat-box">
-            <p class="stat-label">Propiedades</p>
-            <p class="stat-value">{{ selectedLandlord.properties }}</p>
-          </div>
-          <div class="stat-box">
-            <p class="stat-label">Tiempo de respuesta</p>
-            <p class="stat-value">{{ selectedLandlord.response }}</p>
-          </div>
-        </div>
-
-        <div class="modal-section">
-          <h3 class="section-title">Tipos de propiedad</h3>
-          <div class="property-types-modal">
-            <span *ngFor="let type of selectedLandlord.propertyTypes" class="type-badge-modal">
-              {{ type }}
-            </span>
-          </div>
-        </div>
-
-        <div class="modal-section">
-          <h3 class="section-title">Información de contacto</h3>
-          <div class="contact-info">
-            <div class="contact-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                </path>
-              </svg>
-              <span>{{ selectedLandlord.phone }}</span>
+        <div class="mini-listings-grid">
+          <div *ngFor="let prop of ownerProperties" class="mini-listing-card">
+            <div class="listing-image-container">
+              <img [src]="getImageUrl(prop.fotos && prop.fotos.length > 0 ? prop.fotos[0].url : '')" [alt]="prop.titulo"
+                class="listing-image">
+              <span class="status-badge" [class.approved]="prop.aprobada" [class.pending]="!prop.aprobada">
+                {{ prop.aprobada ? 'Aprobada' : 'Pendiente' }}
+              </span>
             </div>
-            <div class="contact-item">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <span>{{ selectedLandlord.email }}</span>
+            <div class="listing-info">
+              <h4>{{ prop.titulo }}</h4>
+              <p style="font-weight: 600; font-size: 13px; color: #444; margin-bottom: 2px;">
+                {{ prop.tipo === 'Depa' ? 'Departamento' : prop.tipo }}
+              </p>
+              <p>{{ prop.distrito }}, {{ prop.departamento }}</p>
+              <p class="price">S/{{ prop.precioMensual }} / mes</p>
+              <button class="status-toggle-btn" [class.rented]="prop.alquilado"
+                (click)="toggleRentStatus(prop, $event)">
+                {{ prop.alquilado ? 'Alquilado 🔴' : 'Disponible 🟢' }}
+              </button>
+              <button class="delete-prop-btn" (click)="deleteProperty(prop, $event)">
+                🗑️ Eliminar
+              </button>
             </div>
           </div>
-        </div>
-
-        <div class="join-date-box">
-          <p>Miembro desde: <span class="join-date">{{ selectedLandlord.joinDate }}</span></p>
-        </div>
-
-        <div class="modal-actions">
-          <button class="btn-primary" (click)="sendMessage(selectedLandlord)">
-            Enviar mensaje
-          </button>
-          <button class="btn-secondary" (click)="viewProperties(selectedLandlord)">
-            Ver propiedades
-          </button>
         </div>
       </div>
     </div>

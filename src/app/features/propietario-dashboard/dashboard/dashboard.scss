@@ -33,6 +33,7 @@ $border: #e2e8f0;
         margin: 0;
         background: linear-gradient(135deg, $primary, $primary-dark);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
@@ -61,11 +62,11 @@ $border: #e2e8f0;
     }
 }
 
-// CONTENT GRID
+// CONTENT GRID (columna izquierda más delgada)
 .dashboard-content {
     display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 2rem;
+    grid-template-columns: 320px 1fr;
+    gap: 1.5rem;
     align-items: start;
 
     @media (max-width: 768px) {
@@ -73,55 +74,57 @@ $border: #e2e8f0;
     }
 }
 
-// FORM SECTION
+// FORM SECTION (compactado)
 .create-section {
     position: sticky;
-    top: 2rem;
+    top: 1rem;
 
     .card {
         background: $surface;
         border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        padding: 1.25rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
         .card-header {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
 
             h3 {
                 margin: 0;
-                font-size: 1.25rem;
+                font-size: 1.2rem;
             }
 
             p {
                 margin: 0.25rem 0 0;
                 color: $text-light;
-                font-size: 0.875rem;
+                font-size: 0.85rem;
             }
         }
     }
 }
 
+// Input groups compactados
 .input-group {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
 
     label {
         display: block;
         font-weight: 500;
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.35rem;
         color: $secondary;
     }
 
     input,
     textarea,
     select {
-        width: 100%;
-        padding: 0.75rem 1rem;
+        width: 80%;
+        padding: 0.65rem 0.9rem;
         border: 1px solid $border;
         border-radius: 8px;
         background: #f8fafc;
         transition: all 0.2s;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
 
         &:focus {
             outline: none;
@@ -135,7 +138,6 @@ $border: #e2e8f0;
         resize: vertical;
     }
 
-    // Custom Select Arrow
     .select-wrapper {
         position: relative;
 
@@ -156,9 +158,10 @@ $border: #e2e8f0;
     }
 }
 
+// Botón de enviar compactado
 .btn-submit {
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem;
     background: $primary;
     color: white;
     border: none;
@@ -279,8 +282,6 @@ $border: #e2e8f0;
         background: #fef9c3;
         color: #a16207;
     }
-
-    // Yellowish/Orange for rented
 }
 
 .property-desc {
@@ -296,14 +297,6 @@ $border: #e2e8f0;
     margin-bottom: 1rem;
     font-size: 0.875rem;
     color: $text-light;
-
-    .tag {
-        background: #f1f5f9;
-        padding: 0.1rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        text-transform: capitalize;
-    }
 }
 
 .btn-action {
@@ -315,73 +308,134 @@ $border: #e2e8f0;
     border: 1px solid transparent;
     transition: all 0.2s;
 
-    &.btn-rent {
-        background: #fff1f2;
-        color: #e11d48;
+    &.btn-edit {
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid $border;
 
         &:hover {
-            background: #ffe4e6;
-        }
-    }
-
-    &.btn-free {
-        background: #eff6ff;
-        color: #2563eb;
-
-        &:hover {
-            background: #dbeafe;
+            background: #e2e8f0;
+            color: $text;
         }
     }
 }
 
 .empty-state {
     text-align: center;
-    padding: 4rem;
+    padding: 3rem;
     color: $secondary;
     background: $background;
     border-radius: 12px;
     border: 2px dashed $border;
 }
 
-// FORM ACTIONS
-.form-actions {
+.status-toggle-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
     display: flex;
-    gap: 10px;
-    margin-top: 1rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+    background: white;
 
-    .btn-cancel {
-        flex: 1;
-        background: #e2e8f0;
-        color: $text;
-        padding: 1rem;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-
-        &:hover {
-            background: #cbd5e1;
-        }
+    &:hover {
+        transform: scale(1.1);
     }
 
-    .btn-submit {
-        flex: 2;
-        width: auto; // Allow flex to control width
+    &.rented {
+        background: #ffebee;
+    }
+
+    &.available {
+        background: #e8f5e9;
     }
 }
 
-// EXTRA ACTION BUTTONS
-.btn-action {
-    &.btn-edit {
-        background: #f1f5f9;
-        color: #475569;
-        margin-right: 0.5rem;
-        border: 1px solid $border;
+// MODAL STYLES
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h3 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 4px;
+        color: $text-light;
 
         &:hover {
-            background: #e2e8f0;
             color: $text;
+        }
+    }
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+
+    .btn-cancel {
+        padding: 10px 20px;
+        background: white;
+        border: 1px solid $border;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+
+        &:hover {
+            background: #f8fafc;
         }
     }
 }

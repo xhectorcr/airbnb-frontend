@@ -14,6 +14,7 @@ export const routes: Routes = [
 
     //Admin
     { path: 'admin/propietarios', component: AdminPropietarios },
+    { path: 'admin/propiedades', loadComponent: () => import('./features/admin-dashboard/propiedades/propiedades').then(m => m.AdminPropiedades) },
 
     //Propietario
     { path: 'propietario/dashboard', component: PropietarioDashboard },
