@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PropiedadesService, Propiedad } from '../../core/services/propiedades.service';
@@ -42,12 +42,18 @@ export class Home implements OnInit {
     'Tumbes', 'Ucayali'
   ];
 
-  constructor(private propiedadesService: PropiedadesService) { }
+  constructor(
+    private propiedadesService: PropiedadesService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.propiedadesService.getAllProperties().subscribe({
       next: (response) => {
+        console.log('Home Properties loaded:', response);
         this.listings = response.propiedades || [];
+        // Force change detection manually to ensure view updates
+        this.cd.detectChanges();
       },
       error: (err) => {
         console.error('Error fetching properties', err);

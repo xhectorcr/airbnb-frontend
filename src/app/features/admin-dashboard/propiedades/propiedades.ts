@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PropiedadesService, Propiedad } from '../../../core/services/propiedades.service';
 import { FormsModule } from '@angular/forms';
@@ -44,13 +44,18 @@ export class AdminPropiedades implements OnInit {
         'Tumbes', 'Ucayali'
     ];
 
-    constructor(private propiedadesService: PropiedadesService) { }
+    constructor(
+        private propiedadesService: PropiedadesService,
+        private cd: ChangeDetectorRef
+    ) { }
 
     ngOnInit() {
         this.propiedadesService.getAdminAllProperties().subscribe({
             next: (response) => {
-                // Map to match structure expected by template if necessary, currently AdminAllProperties returns array directly
+                console.log('Admin Properties loaded:', response);
                 this.listings = response || [];
+                // Force change detection manually to ensure view updates
+                this.cd.detectChanges();
             },
             error: (err) => {
                 console.error('Error fetching admin properties', err);
